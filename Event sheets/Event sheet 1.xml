@@ -1,0 +1,671 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Event sheet 1</name>
+    <events>
+        <variable constant="1" name="EXPLODE_WAIT" sid="381504922253037" static="0" type="number">0.05</variable>
+        <variable constant="0" name="explode" sid="650829898350044" static="0" type="number">0</variable>
+        <variable constant="1" name="WIN_AMOUNT" sid="456278291820570" static="0" type="number">45</variable>
+        <variable constant="0" name="blockSmashes" sid="577708996698714" static="0" type="number">0</variable>
+        <variable constant="0" name="gameState" sid="243344070099615" static="0" type="number">0</variable>
+        <variable constant="0" name="applesCollected" sid="626087661785567" static="0" type="number">0</variable>
+        <variable constant="1" name="TURN_SPEED" sid="143937181198568" static="0" type="number">2</variable>
+        <variable constant="0" name="whichSpawn" sid="768332087868019" static="0" type="number">-1</variable>
+        <variable constant="0" name="whichBody" sid="798968365760932" static="0" type="number">1</variable>
+        <comment>Initializes the snake</comment>
+        <event-block sid="865390419760528">
+            <conditions>
+                <condition id="-2" name="On start of layout" sid="412373329639527" type="System" />
+            </conditions>
+            <actions>
+                <action behavior="Pin" id="0" name="Pin to object" sid="790362874125363" type="HeadSight">
+                    <param id="0" name="Pin to">Head</param>
+                    <param id="1" name="Mode">0</param>
+                </action>
+                <action behavior="Pin" id="0" name="Pin to object" sid="814899528535725" type="Body">
+                    <param id="0" name="Pin to">Head</param>
+                    <param id="1" name="Mode">3</param>
+                </action>
+                <action behavior="Turret" id="1" name="Add object to target" sid="746101502872151" type="Body">
+                    <param id="0" name="Target">Head</param>
+                </action>
+                <action behavior="Pin" id="0" name="Pin to object" sid="855492082647523" type="Body2">
+                    <param id="0" name="Pin to">Body</param>
+                    <param id="1" name="Mode">3</param>
+                </action>
+                <action behavior="Turret" id="1" name="Add object to target" sid="865465206301417" type="Body2">
+                    <param id="0" name="Target">Body</param>
+                </action>
+                <action id="0" name="Set text" sid="689257891795210" type="Apples">
+                    <param id="0" name="Text">&quot;Apples: &quot; &amp; applesCollected &amp; &quot; / &quot; &amp; WIN_AMOUNT</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>Restarts Game</comment>
+        <event-block sid="372314430244117">
+            <conditions>
+                <condition id="0" name="On key pressed" sid="931454896018356" type="Keyboard">
+                    <param id="0" name="Key">32</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="491117840126416">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="677960311754576" type="System">
+                            <param id="0" name="Variable">gameState</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action behavior="Bullet" id="5" name="Set enabled" sid="940403801173462" type="Head">
+                            <param id="0" name="State">1</param>
+                        </action>
+                        <action id="-15" name="Set visible" sid="645610606321128" type="Start">
+                            <param id="0" name="Visibility">0</param>
+                        </action>
+                        <action id="-15" name="Set visible" sid="353879615363781" type="Display">
+                            <param id="0" name="Visibility">0</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block any="1" sid="892701798872351">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="789391278866939" type="System">
+                            <param id="0" name="Variable">gameState</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">1</param>
+                        </condition>
+                        <condition id="-14" name="Compare variable" sid="499247772561451" type="System">
+                            <param id="0" name="Variable">gameState</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">2</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-21" name="Reset global variables" sid="733859004307191" type="System" />
+                        <action id="-26" name="Restart layout" sid="635654827530322" type="System" />
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <comment>Controls Head movement</comment>
+        <event-block any="1" sid="431318386836283">
+            <conditions>
+                <condition id="2" name="Key is down" sid="313083113664974" type="Keyboard">
+                    <param id="0" name="Key">37</param>
+                </condition>
+                <condition id="2" name="Key is down" sid="507308113494868" type="Keyboard">
+                    <param id="0" name="Key">65</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action behavior="Bullet" id="3" name="Set angle of motion" sid="199156552138725" type="Head">
+                    <param id="0" name="Angle">Head.Angle - TURN_SPEED</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block any="1" sid="203550967944951">
+            <conditions>
+                <condition id="2" name="Key is down" sid="497613062016791" type="Keyboard">
+                    <param id="0" name="Key">39</param>
+                </condition>
+                <condition id="2" name="Key is down" sid="914391786961190" type="Keyboard">
+                    <param id="0" name="Key">68</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action behavior="Bullet" id="3" name="Set angle of motion" sid="687955042187848" type="Head">
+                    <param id="0" name="Angle">Head.Angle + TURN_SPEED</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>Spawns a new Apple and Block, and attaches a body part to the end of the snake</comment>
+        <event-block sid="448871801644756">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="645954027521087" type="Head">
+                    <param id="0" name="Object">Apple</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-9" name="Destroy" sid="382687058968469" type="Apple" />
+                <action id="-9" name="Set value" sid="199572326282522" type="System">
+                    <param id="0" name="Variable">whichSpawn</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+                <action id="-3" name="Create object" sid="604371657714987" type="System">
+                    <param id="0" name="Object to create">SpawnRange</param>
+                    <param id="1" name="Layer">0</param>
+                    <param id="2" name="X">random(100, LayoutWidth - 100)</param>
+                    <param id="3" name="Y">random(100, LayoutHeight - 100)</param>
+                </action>
+            </actions>
+            <sub-events>
+                <event-block sid="261296949221016">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="316560067067567" type="System">
+                            <param id="0" name="Variable">gameState</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-10" name="Add to" sid="312125164680792" type="System">
+                            <param id="0" name="Variable">applesCollected</param>
+                            <param id="1" name="Value">1</param>
+                        </action>
+                        <action id="0" name="Set text" sid="118975763761606" type="Apples">
+                            <param id="0" name="Text">&quot;Apples: &quot; &amp; applesCollected &amp; &quot; / &quot; &amp; WIN_AMOUNT</param>
+                        </action>
+                    </actions>
+                    <sub-events>
+                        <event-block sid="602152157115135">
+                            <conditions>
+                                <condition id="-8" name="Compare two values" sid="596900036488246" type="System">
+                                    <param id="0" name="First value">applesCollected % 5</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Second value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-10" name="Add to" sid="921465578635609" type="System">
+                                    <param id="0" name="Variable">blockSmashes</param>
+                                    <param id="1" name="Value">1</param>
+                                </action>
+                                <action id="0" name="Set text" sid="244562538350931" type="BlockSmash">
+                                    <param id="0" name="Text">&quot;Block Smashes: &quot; &amp; blockSmashes</param>
+                                </action>
+                                <action id="0" name="Play" sid="536091221145724" type="Audio">
+                                    <param id="0" name="Audio file">smash_get</param>
+                                    <param id="2" name="Loop">0</param>
+                                    <param id="3" name="Volume">0</param>
+                                    <param id="1" name="Tag (optional)">&quot;&quot;</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <event-block sid="925890228063593">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="569255984455347" type="System">
+                            <param id="0" name="Variable">gameState</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                        <condition id="-14" name="Compare variable" sid="673602523959625" type="System">
+                            <param id="0" name="Variable">applesCollected</param>
+                            <param id="1" name="Comparison">5</param>
+                            <param id="2" name="Value">WIN_AMOUNT</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-15" name="Set visible" sid="537128829082862" type="Win">
+                            <param id="0" name="Visibility">1</param>
+                        </action>
+                        <action id="-15" name="Set visible" sid="563864058088328" type="Restart">
+                            <param id="0" name="Visibility">1</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="538559379117404" type="System">
+                            <param id="0" name="Variable">gameState</param>
+                            <param id="1" name="Value">2</param>
+                        </action>
+                        <action id="0" name="Play" sid="861321617875175" type="Audio">
+                            <param id="0" name="Audio file">win</param>
+                            <param id="2" name="Loop">0</param>
+                            <param id="3" name="Volume">0</param>
+                            <param id="1" name="Tag (optional)">&quot;&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="481251595121122">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="724415618905821" type="System">
+                            <param id="0" name="Variable">whichBody</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                        <condition id="-13" name="Pick nth instance" sid="501776025613414" type="System">
+                            <param id="0" name="Object">Body</param>
+                            <param id="1" name="Instance">Body.Count - 1</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Spawn another object" sid="698803582165697" type="Body">
+                            <param id="0" name="Object">Body2</param>
+                            <param id="1" name="Layer">0</param>
+                            <param id="2" name="Image point">1</param>
+                        </action>
+                        <action behavior="Pin" id="0" name="Pin to object" sid="319062833011993" type="Body2">
+                            <param id="0" name="Pin to">Body</param>
+                            <param id="1" name="Mode">4</param>
+                        </action>
+                        <action behavior="Turret" id="1" name="Add object to target" sid="180533633744681" type="Body2">
+                            <param id="0" name="Target">Body</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="327183110063213" type="System">
+                            <param id="0" name="Variable">whichBody</param>
+                            <param id="1" name="Value">1</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="969146694335620">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="490601424252729" type="System">
+                            <param id="0" name="Variable">whichBody</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">1</param>
+                        </condition>
+                        <condition id="-13" name="Pick nth instance" sid="974446822361963" type="System">
+                            <param id="0" name="Object">Body2</param>
+                            <param id="1" name="Instance">Body2.Count - 1</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Spawn another object" sid="236155450096662" type="Body2">
+                            <param id="0" name="Object">Body</param>
+                            <param id="1" name="Layer">0</param>
+                            <param id="2" name="Image point">1</param>
+                        </action>
+                        <action behavior="Pin" id="0" name="Pin to object" sid="121337223875255" type="Body">
+                            <param id="0" name="Pin to">Body2</param>
+                            <param id="1" name="Mode">4</param>
+                        </action>
+                        <action behavior="Turret" id="1" name="Add object to target" sid="234440486957552" type="Body">
+                            <param id="0" name="Target">Body2</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="228890180675757" type="System">
+                            <param id="0" name="Variable">whichBody</param>
+                            <param id="1" name="Value">0</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <comment>Prevents overlapping objects</comment>
+        <event-block sid="343446270799733">
+            <conditions>
+                <condition id="-18" name="On created" sid="496846192515276" type="SpawnRange" />
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block any="1" sid="588900002069672">
+                    <conditions>
+                        <condition id="1" name="Is overlapping another object" sid="510572018279844" type="SpawnRange">
+                            <param id="0" name="Object">Head</param>
+                        </condition>
+                        <condition id="1" name="Is overlapping another object" sid="317015163717805" type="SpawnRange">
+                            <param id="0" name="Object">Body</param>
+                        </condition>
+                        <condition id="1" name="Is overlapping another object" sid="386075183127313" type="SpawnRange">
+                            <param id="0" name="Object">Body2</param>
+                        </condition>
+                        <condition id="1" name="Is overlapping another object" sid="571667416682883" type="SpawnRange">
+                            <param id="0" name="Object">Apple</param>
+                        </condition>
+                        <condition id="1" name="Is overlapping another object" sid="305623046068996" type="SpawnRange">
+                            <param id="0" name="Object">Block</param>
+                        </condition>
+                        <condition id="1" name="Is overlapping another object" sid="178161282290041" type="SpawnRange">
+                            <param id="0" name="Object">HeadSight</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Destroy" sid="881834890484517" type="SpawnRange" />
+                        <action id="-3" name="Create object" sid="894918402149564" type="System">
+                            <param id="0" name="Object to create">SpawnRange</param>
+                            <param id="1" name="Layer">0</param>
+                            <param id="2" name="X">random(100, LayoutWidth - 100)</param>
+                            <param id="3" name="Y">random(100, LayoutHeight - 100)</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="620399066573104">
+                    <conditions>
+                        <condition id="1" inverted="1" name="Is overlapping another object" sid="552133616408273" type="SpawnRange">
+                            <param id="0" name="Object">Head</param>
+                        </condition>
+                        <condition id="1" inverted="1" name="Is overlapping another object" sid="253204994713770" type="SpawnRange">
+                            <param id="0" name="Object">Body</param>
+                        </condition>
+                        <condition id="1" inverted="1" name="Is overlapping another object" sid="800550785836197" type="SpawnRange">
+                            <param id="0" name="Object">Body2</param>
+                        </condition>
+                        <condition id="1" inverted="1" name="Is overlapping another object" sid="349001217772551" type="SpawnRange">
+                            <param id="0" name="Object">Apple</param>
+                        </condition>
+                        <condition id="1" inverted="1" name="Is overlapping another object" sid="162917713761634" type="SpawnRange">
+                            <param id="0" name="Object">Block</param>
+                        </condition>
+                        <condition id="1" inverted="1" name="Is overlapping another object" sid="164300748965053" type="SpawnRange">
+                            <param id="0" name="Object">HeadSight</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="396360748288524">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="585467825216081" type="System">
+                                    <param id="0" name="Variable">whichSpawn</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="0" name="Spawn another object" sid="860560463960748" type="SpawnRange">
+                                    <param id="0" name="Object">Apple</param>
+                                    <param id="1" name="Layer">1</param>
+                                    <param id="2" name="Image point">0</param>
+                                </action>
+                                <action id="-9" name="Destroy" sid="365947682061397" type="SpawnRange" />
+                                <action id="-9" name="Set value" sid="562378658210426" type="System">
+                                    <param id="0" name="Variable">whichSpawn</param>
+                                    <param id="1" name="Value">1</param>
+                                </action>
+                                <action id="-3" name="Create object" sid="800471589833036" type="System">
+                                    <param id="0" name="Object to create">SpawnRange</param>
+                                    <param id="1" name="Layer">0</param>
+                                    <param id="2" name="X">random(100, LayoutWidth - 100)</param>
+                                    <param id="3" name="Y">random(100, LayoutHeight - 100)</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="699897476874235">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="636469301355479" type="System">
+                                    <param id="0" name="Variable">whichSpawn</param>
+                                    <param id="1" name="Comparison">0</param>
+                                    <param id="2" name="Value">1</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-16" name="Wait" sid="648649617431131" type="System">
+                                    <param id="0" name="Seconds">0.2</param>
+                                </action>
+                                <action id="0" name="Spawn another object" sid="449785271003248" type="SpawnRange">
+                                    <param id="0" name="Object">Block</param>
+                                    <param id="1" name="Layer">1</param>
+                                    <param id="2" name="Image point">0</param>
+                                </action>
+                                <action id="-9" name="Destroy" sid="565886886092501" type="SpawnRange" />
+                                <action id="-9" name="Set value" sid="642731968039512" type="System">
+                                    <param id="0" name="Variable">whichSpawn</param>
+                                    <param id="1" name="Value">0</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <comment>Explodes Player</comment>
+        <event-block sid="637813439434682">
+            <conditions>
+                <condition id="-14" name="Compare variable" sid="857218069640532" type="System">
+                    <param id="0" name="Variable">explode</param>
+                    <param id="1" name="Comparison">0</param>
+                    <param id="2" name="Value">1</param>
+                </condition>
+                <condition id="-6" name="Every X seconds" sid="955611391890532" type="System">
+                    <param id="0" name="Interval (seconds)">EXPLODE_WAIT * 4</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="500850873589534">
+                    <conditions>
+                        <condition id="-13" name="Pick nth instance" sid="664290512196680" type="System">
+                            <param id="0" name="Object">Body</param>
+                            <param id="1" name="Instance">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-16" name="Wait" sid="423450202714392" type="System">
+                            <param id="0" name="Seconds">EXPLODE_WAIT</param>
+                        </action>
+                        <action id="-9" name="Destroy" sid="829027565413372" type="Body" />
+                    </actions>
+                </event-block>
+                <event-block sid="178354724718861">
+                    <conditions>
+                        <condition id="-13" name="Pick nth instance" sid="946726302694139" type="System">
+                            <param id="0" name="Object">Body2</param>
+                            <param id="1" name="Instance">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-16" name="Wait" sid="104227012038440" type="System">
+                            <param id="0" name="Seconds">EXPLODE_WAIT * 2</param>
+                        </action>
+                        <action id="-9" name="Destroy" sid="336474598837984" type="Body2" />
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <comment>Player dies from self</comment>
+        <event-block any="1" sid="585149114273906">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="388230298926402" type="Head">
+                    <param id="0" name="Object">Body</param>
+                </condition>
+                <condition id="0" name="On collision with another object" sid="551127665527648" type="Head">
+                    <param id="0" name="Object">Body2</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="103618149526141">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="276417291117620" type="System">
+                            <param id="0" name="Variable">gameState</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action behavior="Bullet" id="5" name="Set enabled" sid="498733628689817" type="Head">
+                            <param id="0" name="State">0</param>
+                        </action>
+                        <action id="-15" name="Set visible" sid="129868975741313" type="GameOver">
+                            <param id="0" name="Visibility">1</param>
+                        </action>
+                        <action id="-15" name="Set visible" sid="788913327003073" type="Restart">
+                            <param id="0" name="Visibility">1</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="152440881534665" type="System">
+                            <param id="0" name="Variable">gameState</param>
+                            <param id="1" name="Value">1</param>
+                        </action>
+                        <action id="0" name="Play" sid="663428840216829" type="Audio">
+                            <param id="0" name="Audio file">lose</param>
+                            <param id="2" name="Loop">0</param>
+                            <param id="3" name="Volume">0</param>
+                            <param id="1" name="Tag (optional)">&quot;&quot;</param>
+                        </action>
+                        <action id="-9" name="Set value" sid="978446261892601" type="System">
+                            <param id="0" name="Variable">explode</param>
+                            <param id="1" name="Value">1</param>
+                        </action>
+                        <action id="-9" name="Destroy" sid="746494764938619" type="Head" />
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <comment>Player smashes or dies from Block</comment>
+        <event-block sid="788295934178374">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="147726618911190" type="Head">
+                    <param id="0" name="Object">Block</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="605979767055855">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="639036306292280" type="System">
+                            <param id="0" name="Variable">gameState</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="748178804664441">
+                            <conditions>
+                                <condition id="-14" name="Compare variable" sid="117913639038706" type="System">
+                                    <param id="0" name="Variable">blockSmashes</param>
+                                    <param id="1" name="Comparison">4</param>
+                                    <param id="2" name="Value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Destroy" sid="714388958639611" type="Block" />
+                                <action id="-11" name="Subtract from" sid="853084463776529" type="System">
+                                    <param id="0" name="Variable">blockSmashes</param>
+                                    <param id="1" name="Value">1</param>
+                                </action>
+                                <action id="0" name="Set text" sid="940179020781779" type="BlockSmash">
+                                    <param id="0" name="Text">&quot;Block Smashes: &quot; &amp; blockSmashes</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="508386777401123">
+                            <conditions>
+                                <condition id="-22" name="Else" sid="474380103409187" type="System" />
+                            </conditions>
+                            <actions>
+                                <action behavior="Bullet" id="5" name="Set enabled" sid="553109301772804" type="Head">
+                                    <param id="0" name="State">0</param>
+                                </action>
+                                <action id="-15" name="Set visible" sid="279891730926055" type="GameOver">
+                                    <param id="0" name="Visibility">1</param>
+                                </action>
+                                <action id="-15" name="Set visible" sid="815663230295462" type="Restart">
+                                    <param id="0" name="Visibility">1</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="382721095371912" type="System">
+                                    <param id="0" name="Variable">gameState</param>
+                                    <param id="1" name="Value">1</param>
+                                </action>
+                                <action id="0" name="Play" sid="871592811778872" type="Audio">
+                                    <param id="0" name="Audio file">lose</param>
+                                    <param id="2" name="Loop">0</param>
+                                    <param id="3" name="Volume">0</param>
+                                    <param id="1" name="Tag (optional)">&quot;&quot;</param>
+                                </action>
+                                <action id="-9" name="Set value" sid="206058258155784" type="System">
+                                    <param id="0" name="Variable">explode</param>
+                                    <param id="1" name="Value">1</param>
+                                </action>
+                                <action id="-9" name="Destroy" sid="168149004506283" type="Head" />
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <event-block sid="596075831807612">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="931899765755614" type="System">
+                            <param id="0" name="Variable">gameState</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">2</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Destroy" sid="963899328164890" type="Block" />
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <comment>Audio-Visuals on destroy</comment>
+        <event-block sid="210580037897210">
+            <conditions>
+                <condition id="-19" name="On destroyed" sid="149673089910192" type="Apple" />
+            </conditions>
+            <actions>
+                <action id="0" name="Spawn another object" sid="122748116625980" type="Apple">
+                    <param id="0" name="Object">AppleP</param>
+                    <param id="1" name="Layer">1</param>
+                    <param id="2" name="Image point">0</param>
+                </action>
+                <action id="0" name="Play" sid="568493887413595" type="Audio">
+                    <param id="0" name="Audio file">apple</param>
+                    <param id="2" name="Loop">0</param>
+                    <param id="3" name="Volume">0</param>
+                    <param id="1" name="Tag (optional)">&quot;&quot;</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="446651563774026">
+            <conditions>
+                <condition id="-19" name="On destroyed" sid="378839097430643" type="Block" />
+            </conditions>
+            <actions>
+                <action id="0" name="Spawn another object" sid="893371282852914" type="Block">
+                    <param id="0" name="Object">BlockP</param>
+                    <param id="1" name="Layer">1</param>
+                    <param id="2" name="Image point">0</param>
+                </action>
+                <action id="0" name="Play" sid="706782841204970" type="Audio">
+                    <param id="0" name="Audio file">block</param>
+                    <param id="2" name="Loop">0</param>
+                    <param id="3" name="Volume">0</param>
+                    <param id="1" name="Tag (optional)">&quot;&quot;</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="309865228253565">
+            <conditions>
+                <condition id="-19" name="On destroyed" sid="765573943464697" type="Head" />
+            </conditions>
+            <actions>
+                <action id="0" name="Spawn another object" sid="677961781759169" type="Head">
+                    <param id="0" name="Object">SnakeP</param>
+                    <param id="1" name="Layer">1</param>
+                    <param id="2" name="Image point">0</param>
+                </action>
+                <action id="0" name="Play" sid="156151642133790" type="Audio">
+                    <param id="0" name="Audio file">snake</param>
+                    <param id="2" name="Loop">0</param>
+                    <param id="3" name="Volume">0</param>
+                    <param id="1" name="Tag (optional)">&quot;&quot;</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="354835547188295">
+            <conditions>
+                <condition id="-19" name="On destroyed" sid="926834642030090" type="Body" />
+            </conditions>
+            <actions>
+                <action id="0" name="Spawn another object" sid="817465967983481" type="Body">
+                    <param id="0" name="Object">SnakeP</param>
+                    <param id="1" name="Layer">1</param>
+                    <param id="2" name="Image point">0</param>
+                </action>
+                <action id="0" name="Play" sid="457780453802737" type="Audio">
+                    <param id="0" name="Audio file">snake</param>
+                    <param id="2" name="Loop">0</param>
+                    <param id="3" name="Volume">0</param>
+                    <param id="1" name="Tag (optional)">&quot;&quot;</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="622737813295734">
+            <conditions>
+                <condition id="-19" name="On destroyed" sid="174962350321347" type="Body2" />
+            </conditions>
+            <actions>
+                <action id="0" name="Spawn another object" sid="480399081912020" type="Body2">
+                    <param id="0" name="Object">SnakeP</param>
+                    <param id="1" name="Layer">1</param>
+                    <param id="2" name="Image point">0</param>
+                </action>
+                <action id="0" name="Play" sid="964004470398021" type="Audio">
+                    <param id="0" name="Audio file">snake</param>
+                    <param id="2" name="Loop">0</param>
+                    <param id="3" name="Volume">0</param>
+                    <param id="1" name="Tag (optional)">&quot;&quot;</param>
+                </action>
+            </actions>
+        </event-block>
+    </events>
+</c2eventsheet>
